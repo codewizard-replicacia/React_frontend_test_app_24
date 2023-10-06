@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="Model">
+            <EntityType HasStream="false" Name="BuildTool">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" isUnique="false"/>
+                <Property Name="Name" Type="Edm.String" isUnique="false"/>
+                <Property Name="Description" Type="Edm.String" isUnique="false"/>
+            </EntityType>
+            <EntityType HasStream="false" Name="FrontendApp">
+                <Key>
+                    <PropertyRef Name="AppId"/>
+                </Key>
+                <Property Name="AppId" Type="Edm.Int64" isUnique="false"/>
+                <Property Name="ProjectDetails" Type="Model.BasicDetails" isUnique="false"/>
+                <Property Name="MetaTags" Type="Collection(Edm.String)" isUnique="false"/>
+                <Property Name="Documentation" Type="Edm.String" isUnique="false"/>
+                <Property Name="SelectedScreenIds" Type="Collection(Edm.Int32)" isUnique="false"/>
+                <Property Name="Company_name" Type="Edm.String" isUnique="false"/>
+                <NavigationProperty Name="SelectedScreens" Type="Collection(Model.FrontendScreen)"/>
+            </EntityType>
+            <EntityType HasStream="false" Name="Architecture">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" isUnique="false"/>
+                <Property Name="Name" Type="Edm.String" isUnique="false"/>
+                <Property Name="Description" Type="Edm.String" isUnique="false"/>
+            </EntityType>
+            <EntityType HasStream="false" Name="Server">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" isUnique="false"/>
+                <Property Name="Name" Type="Edm.String" isUnique="false"/>
+                <Property Name="Description" Type="Edm.String" isUnique="false"/>
+            </EntityType>
+            <EntityType HasStream="false" Name="PackageManagement">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32" isUnique="false"/>
+                <Property Name="Name" Type="Edm.String" isUnique="false"/>
+                <Property Name="Description" Type="Edm.String" isUnique="false"/>
+            </EntityType>
+            <EntityType HasStream="false" Name="FrontendScreen">
+                <Key>
+                    <PropertyRef Name="FeScreenId"/>
+                </Key>
+                <Property Name="FeScreenId" Type="Edm.Int32" isUnique="false"/>
+                <Property Name="ScreenName" Type="Edm.String" isUnique="false"/>
+                <Property Name="ScreenDescription" Type="Edm.String" isUnique="false"/>
+                <Property Name="Documentation" Type="Edm.String" isUnique="false"/>
+                <Property Name="ScreenLayout" Type="Edm.String" isUnique="false"/>
+            </EntityType>
+            <EntityType HasStream="false" Name="Project">
+                <Key>
+                    <PropertyRef Name="ProjectId"/>
+                </Key>
+                <Property Name="ProjectId" Type="Edm.Int32" isUnique="false"/>
+                <Property Name="DateOfCreation" Type="Edm.DateTimeOffset" isUnique="false"/>
+                <Property Name="Attribute3" Type="Edm.Int64" isUnique="false"/>
+                <NavigationProperty Name="FrontendApplication" Type="Model.FrontendApp"/>
+            </EntityType>
+            <EntityContainer Name="Container">
+                <EntitySet Name="BuildTools" EntityType="Model.BuildTool"/>
+                <EntitySet Name="FrontendApps" EntityType="Model.FrontendApp">
+                    <NavigationPropertyBinding Path="SelectedScreens" Target="FrontendScreens"/>
+                </EntitySet>
+                <EntitySet Name="Architectures" EntityType="Model.Architecture"/>
+                <EntitySet Name="Servers" EntityType="Model.Server"/>
+                <EntitySet Name="PackageManagements" EntityType="Model.PackageManagement"/>
+                <EntitySet Name="FrontendScreens" EntityType="Model.FrontendScreen"/>
+                <EntitySet Name="Projects" EntityType="Model.Project">
+                    <NavigationPropertyBinding Path="FrontendApplication" Target="FrontendApps"/>
+                </EntitySet>
+            </EntityContainer>
+            <ComplexType Name="BasicDetails">
+                <Property Name="AppName" Type="Edm.String" isUnique="false"/>
+                <Property Name="AppDescription" Type="Edm.String" isUnique="false"/>
+                <Property Name="Namespace" Type="Edm.String" isUnique="false"/>
+                <Property Name="PackageManagement" Type="Edm.String" isUnique="false"/>
+                <Property Name="BuildTool" Type="Edm.String" isUnique="false"/>
+                <Property Name="Server" Type="Edm.String" isUnique="false"/>
+                <Property Name="Architecture" Type="Edm.String" isUnique="false"/>
+            </ComplexType>
+            <ComplexType Name="AdvancedDetails">
+                <Property Name="CorsStatus" Type="Edm.Boolean" isUnique="false"/>
+            </ComplexType>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
